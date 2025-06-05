@@ -20,7 +20,7 @@ app.use(helmet({
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
       scriptSrc: ["'self'"],
-      connectSrc: ["'self'", "http://localhost:3000", "http://localhost:3001"]
+      connectSrc: ["'self'", "https://ems-nine-theta.vercel.app", "http://localhost:3000", "http://localhost:3001"]
     }
   }
 }));
@@ -28,7 +28,7 @@ app.use(helmet({
 // Rate limiting for login attempts
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Limit each IP to 5 requests per windowMs
+  max: 5,
   message: {
     success: false,
     error: 'Too many login attempts, please try again later.'
@@ -39,8 +39,8 @@ const loginLimiter = rateLimit({
 
 // General rate limiting
 const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   message: {
     success: false,
     error: 'Too many requests, please try again later.'
@@ -54,7 +54,7 @@ app.use('/api/', generalLimiter);
 // CORS Configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? ['https://yourdomain.com']
+    ? ['https://ems-nine-theta.vercel.app']
     : ['http://localhost:3000', 'http://localhost:3001'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
